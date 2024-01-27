@@ -1,0 +1,86 @@
+﻿@model IEnumerable<GerenciaVendas.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<!-- Botão para abrir o modal -->
+<button class="btn btn-primary" data-toggle="modal" data-target="#clienteModal">Adicionar Novo Cliente</button>
+
+<!-- Modal para Adicionar Cliente -->
+<div class="modal fade" id="clienteModal" tabindex="-1" role="dialog" aria-labelledby="clienteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="clienteModalLabel">Novo Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" asp-controller="Cliente" method="post">
+                    <div class="form-group">
+                        <label for="nome">Nome</label>
+                        <input type="text" class="form-control" id="nome" name="Nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataNascimento">Data de Nascimento</label>
+                        <input type="date" class="form-control" id="dataNascimento" name="DataNascimento" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cpfCnpj">CPF/CNPJ</label>
+                        <input type="text" class="form-control" id="cpfCnpj" name="CpfCnpj" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endereco">Endereço</label>
+                        <input type="text" class="form-control" id="endereco" name="Endereco" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tabela de clientes -->
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Data de Nascimento</th>
+            <th>CPF/CNPJ</th>
+            <th>Endereço</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cliente in Model)
+        {
+            <tr>
+                <td>@cliente.Nome</td>
+                <td>@cliente.DataNascimento.ToString("dd/MM/yyyy")</td>
+                <td>@cliente.CPF_CNPJ</td>
+                <td>@cliente.Endereco</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Cliente", new { id = cliente.Id })" class="btn btn-success">Editar</a>
+                    <a href="@Url.Action("Details", "Cliente", new { id = cliente.Id })" class="btn btn-info">Detalhes</a>
+                    <a href="@Url.Action(cliente.Estado ? "Inativar" : "Ativar", "Cliente", new { id = cliente.Id })" class="btn btn-warning">
+                        @(cliente.Estado ? "Inativar" : "Ativar")
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+}
+

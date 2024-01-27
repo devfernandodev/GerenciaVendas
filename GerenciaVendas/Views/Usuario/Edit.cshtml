@@ -1,0 +1,90 @@
+﻿@model EditUserViewModel
+
+@{
+    ViewData["Title"] = "Editar Usuário";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="feedback-message">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success" id="success-message">
+            <i class="fa fa-check-circle"></i> @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger" id="error-message">
+            <i class="fa fa-times-circle"></i> @TempData["ErrorMessage"]
+        </div>
+    }
+</div>
+
+<form asp-action="Edit" method="post" class="edit-user-form">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="Nome"></label>
+        <input asp-for="Nome" class="form-control" />
+        <span asp-validation-for="Nome" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SenhaAtual">Senha Atual</label>
+        <input asp-for="SenhaAtual" class="form-control" type="password" />
+        <span asp-validation-for="SenhaAtual" class="text-danger"></span>
+    </div>
+
+    <div class="button-group">
+        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+        <a asp-controller="Usuario" asp-action="ChangePassword" asp-route-id="@Model.Id" class="btn btn-secondary mt-2">Alterar Senha</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    .feedback-message {
+        margin-bottom: 20px;
+    }
+
+    .edit-user-form {
+        /* Estilos adicionais para o formulário, se necessário */
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .btn {
+        /* Estilos adicionais para os botões */
+    }
+</style>
+<script>
+    window.onload = function () {
+        setTimeout(function () {
+            var successMessage = document.getElementById('success-message');
+            var errorMessage = document.getElementById('error-message');
+            if (successMessage) {
+                successMessage.style.display = 'none';
+            }
+            if (errorMessage) {
+                errorMessage.style.display = 'none';
+            }
+        }, 3000); // 3000 milissegundos = 3 segundos
+    };
+</script>

@@ -1,0 +1,153 @@
+﻿@model IEnumerable<GerenciaVendas.Models.Usuario>
+
+@{
+    ViewData["Title"] = "Gerenciamento de Usuários (Admin)";
+}
+
+<h2>@ViewData["Title"]</h2>
+<!-- Campo de pesquisa -->
+<div class="search-container">
+    <input type="text" id="searchInput" onkeyup="searchUsers()" placeholder="Pesquisar por nome ou email...">
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Administrador</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var usuario in Model)
+        {
+            <tr class="@(usuario.Estado ? "user-active" : "")">
+                <td>@usuario.Nome</td>
+                <td>@usuario.Email</td>
+                <td>@(usuario.Estado ? "Ativo" : "Inativo")</td>
+                <td>@(usuario.IsAdministrador ? "Sim" : "Não")</td>
+                <td>
+                    <a href="@Url.Action("EditAdmin", "Administrador", new { id = usuario.Id })" class="btn btn-success">Editar</a>
+                    <a href="@Url.Action("DetailsAdmin", "Administrador", new { id = usuario.Id })" class="btn btn-info">Detalhes</a>
+                    <a href="@Url.Action(usuario.Estado ? "Inativar" : "Ativar", "Administrador", new { id = usuario.Id })" class="btn btn-warning">
+                        @(usuario.Estado ? "Inativar" : "Ativar")
+                    </a>
+                    @if (!usuario.IsAdministrador)
+                    {
+                        <a href="@Url.Action("TornarAdministrador", "Administrador", new { id = usuario.Id })" class="btn btn-primary">Tornar Admin</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("RemoverAdministrador", "Administrador", new { id = usuario.Id })" class="btn btn-secondary">Remover Admin</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        function searchUsers() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.querySelector(".table");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0]; // Coluna do Nome
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+}
+
+<style>
+    .user-active {
+        background-color: #d4edda; /* Verde claro para usuários ativos */
+    }
+
+    .search-container {
+        text-align: right;
+        margin-bottom: 20px;
+    }
+
+        .search-container input[type="text"] {
+            padding: 8px;
+            margin-top: 10px;
+            font-size: 16px;
+            border: 1px solid #D32F2F;
+        }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .table th, .table td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .table th {
+            background-color: #424242;
+            color: white;
+        }
+
+    .btn {
+        padding: 6px 12px;
+        background-color: #388E3C;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+        .btn:hover {
+            background-color: #2e7d32;
+        }
+
+    .btn-info {
+        background-color: #1976D2;
+    }
+
+        .btn-info:hover {
+            background-color: #1565c0;
+        }
+
+    .btn-primary {
+        background-color: #D32F2F;
+    }
+
+        .btn-primary:hover {
+            background-color: #c62828;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+    .btn-warning {
+        background-color: #FFA000;
+    }
+
+        .btn-warning:hover {
+            background-color: #FF8F00;
+        }
+</style>

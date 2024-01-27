@@ -1,0 +1,15 @@
+﻿@model GerenciaVendas.ViewModels.CreateUserViewModel
+
+@{
+    ViewData["Title"] = "Criar Administrador";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="CriarAdministrador" method="post">
+    <input asp-for="Nome" class="form-control" placeholder="Nome" />
+    <input asp-for="Email" class="form-control" placeholder="Email" />
+    <input asp-for="Senha" class="form-control" placeholder="Senha" type="password" />
+    <input asp-for="ConfirmarSenha" class="form-control" placeholder="Confirmar Senha" type="password" />
+    <button type="submit" class="btn btn-primary">Criar Administrador</button>
+</form>

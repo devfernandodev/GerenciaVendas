@@ -1,0 +1,36 @@
+﻿@model GerenciaVendas.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Registro de Usuário";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Register" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Nome)
+        @Html.TextBoxFor(m => m.Nome, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Senha)
+        @Html.PasswordFor(m => m.Senha, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ConfirmarSenha)
+        @Html.PasswordFor(m => m.ConfirmarSenha, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ConfirmarSenha, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Registrar</button>
+</form>

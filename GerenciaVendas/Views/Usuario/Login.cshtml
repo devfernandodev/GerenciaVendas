@@ -1,0 +1,89 @@
+﻿@model GerenciaVendas.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Login - Gerencia X";
+}
+
+<div class="container-fluid">
+    <div class="row align-items-center justify-content-center">
+        <div class="col-md-6">
+            <!-- Conteúdo da imagem existente -->
+        </div>
+        <div class="col-md-6">
+            <div class="bg-white p-5 rounded shadow">
+                <h2 class="h4 text-center text-rocketseat-purple mb-4">Login - Gerencia X</h2>
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                            {
+                                <li>@error.ErrorMessage</li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+                <form asp-action="Login" method="post" id="loginForm">
+                    @Html.AntiForgeryToken()
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                        @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", aria_label = "Email" } })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Senha -->
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Senha, new { @class = "control-label" })
+                        @Html.PasswordFor(m => m.Senha, new { @class = "form-control", aria_label = "Senha" })
+                        @Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Botões -->
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-rocketseat-blue mr-2">Entrar</button>
+                        <a href="@Url.Action("Create", "Usuario")" class="btn btn-rocketseat-purple">Registrar</a>
+                    </div>
+
+                    <!-- Recuperação de Senha (se aplicável) -->
+                    <div class="text-center">
+                        <a href="@Url.Action("ForgotPassword", "Usuario")" class="text-rocketseat-purple">Esqueceu sua senha?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+<style>
+body {
+background: linear-gradient(to right,#8257e5, #fff);
+        }
+
+        .text-rocketseat-primary {
+            color: #8257e5;
+        }
+
+        .text-rocketseat-purple {
+            color: #6a2ea8;
+        }
+
+        .btn-rocketseat-blue {
+            background-color: #8257e5;
+            color: white;
+        }
+
+        .btn-rocketseat-purple {
+            background-color: #6a2ea8;
+            color: white;
+        }
+        /* Outros estilos personalizados, se necessário */
+    </style>
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

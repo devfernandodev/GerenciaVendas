@@ -1,0 +1,77 @@
+﻿@model GerenciaVendas.ViewModels.CreateUserViewModel
+
+@{
+    ViewData["Title"] = "Criar Novo Usuário";
+}
+
+<!-- Estilos existentes permanecem inalterados -->
+
+<div class="create-user-container">
+    <h2 class="create-user-title">@ViewData["Title"]</h2>
+
+    @if (ViewBag.CreateUserError != null)
+    {
+        <div class="alert alert-danger">@ViewBag.CreateUserError</div>
+    }
+
+    <form asp-action="Create" method="post" class="create-user-form" id="createUserForm">
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nome, new { @class = "control-label" })
+            @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, new { @class = "control-label" })
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+
+        <!-- Nova Senha e Confirmação de Senha -->
+        <div class="form-group">
+            <label for="novaSenha" class="control-label">Nova Senha</label>
+            <input type="password" class="form-control" id="novaSenha" name="novaSenha" />
+            <span class="text-danger" id="senhaError"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="confirmSenha" class="control-label">Confirme a Senha</label>
+            <input type="password" class="form-control" id="confirmSenha" />
+        </div>
+
+        <!-- Botão de Envio -->
+        <div class="form-group">
+            <input type="submit" value="Criar" class="btn btn-custom" />
+        </div>
+    </form>
+</div>
+
+
+
+@section Scripts {
+    <!-- Scripts de Validação e Funções JavaScript -->
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+        document.getElementById('createUserForm').addEventListener('submit', function (e) {
+            var senha = document.getElementById('novaSenha').value;
+            var confirmSenha = document.getElementById('confirmSenha').value;
+            var senhaError = document.getElementById('senhaError');
+
+            if (senha !== confirmSenha) {
+                senhaError.innerText = 'As senhas não coincidem.';
+                e.preventDefault();
+            } else {
+                senhaError.innerText = '';
+            }
+        });
+    </script>
+}
+
+<!-- Links do FontAwesome removidos para simplificar o código. Adicione se necessário -->
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- FontAwesome CSS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script> <!-- FontAwesome JS -->

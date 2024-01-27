@@ -1,0 +1,88 @@
+﻿@model GerenciaVendas.Models.Usuario
+@{
+    ViewData["Title"] = "Detalhes do Usuário";
+    string loggedUserId = ViewBag.LoggedUserId as string;
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title">@Model.Nome</h3>
+        <div class="card-text">
+            <p><strong>Data de Cadastro:</strong> @Model.DataCadastro.ToString("dd/MM/yyyy")</p>
+            <p><strong>Email:</strong> <a href="mailto:@Model.Email">@Model.Email</a></p>
+            <p><strong>Estado:</strong> @(Model.Estado ? "Ativo" : "Inativo")</p>
+        </div>
+    </div>
+</div>
+
+@if (Model.Id.ToString() == loggedUserId)
+{
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a>
+}
+<a asp-action="Index" class="btn btn-secondary">Voltar à Lista</a>
+
+<style>
+    body {
+    background-color: #F5F5F5;
+    color: #424242;
+    font-family: 'Arial', sans-serif;
+}
+
+.card {
+    background-color: #FFFFFF;
+    border: 1px solid #D32F2F;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    color: #D32F2F;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+.card-text p {
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+a {
+    color: #1976D2;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.btn-primary {
+    background-color: #D32F2F;
+    border-color: #D32F2F;
+}
+
+.btn-primary:hover {
+    background-color: darken(#D32F2F, 10%);
+    border-color: darken(#D32F2F, 10%);
+}
+
+.btn-secondary {
+    background-color: #424242;
+    border-color: #424242;
+}
+
+.btn-secondary:hover {
+    background-color: darken(#424242, 10%);
+    border-color: darken(#424242, 10%);
+}
+
+/* Responsividade e estética */
+
+}
+
+</style>

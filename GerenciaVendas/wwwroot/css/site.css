@@ -1,0 +1,77 @@
+/* Espaço entre o conteúdo e a barra de navegação */
+body {
+    padding-top: 100px; /* Ajuste conforme necessário */
+}
+/* Alinhamento dos Botões à Direita */
+.navbar-collapse {
+    justify-content: flex-end;
+}
+
+/* Estilos para o Navbar */
+.navbar {
+    background-color: #322660;
+}
+
+.navbar-dark .navbar-brand,
+.navbar-dark .nav-link {
+    color: #fff;
+}
+
+    .navbar-dark .nav-link:hover {
+        color: #ddd;
+    }
+
+/* Estilos para os botões de Login e Cadastro */
+.nav-link.btn-custom, .nav-link.btn-custom.fake-btn {
+    color: #ccc; /* Cor cinza claro para o texto */
+    background-color: #8257e5;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-right: 25px; /* Espaço entre os botões */
+    border: none; /* Remove a borda padrão do botão */
+}
+    .nav-link.btn-custom:last-child {
+        margin-right: 0; /* Remove a margem no último botão */
+    }
+
+    .nav-link.btn-custom.fake-btn:hover {
+        color: #fff;
+        background-color: #5e4a8a; /* Cor roxa clara no hover */
+    }
+
+/* Footer Personalizado */
+.footer-custom {
+    background-color: #322660;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    line-height: 60px;
+    text-align: center;
+}
+
+/* Ajustes para Responsividade */
+@media (max-width: 991px) {
+    .navbar-nav .nav-item .btn-custom {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 767px) {
+    body {
+        padding-top: 60px;
+    }
+
+    .navbar-collapse {
+        justify-content: flex-start;
+    }
+}
+
+
+
+
+
+
+
